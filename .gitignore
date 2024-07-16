@@ -1,2 +1,4 @@
 # virtual environment
 venv/
+
+frontend/node_modules/
