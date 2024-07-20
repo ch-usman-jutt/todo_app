@@ -1,7 +1,16 @@
-from models import Todo
+from dotenv import load_dotenv
+import os
+import mysql.connector
 
-todos_detail = [
-    Todo(id=1, title="Finish coding bootcamp project", is_completed=False),
-    Todo(id=2, title="Prepare for technical interviews", is_completed=False),
-    Todo(id=3, title="Update resume and LinkedIn profile", is_completed=False)
-]
+load_dotenv()
+
+def get_connection():
+    return mysql.connector.connect(
+        host=os.getenv('DB_HOST'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        database=os.getenv('DB_NAME')
+    )
+
+def get_cursor(connection):
+    return connection.cursor()

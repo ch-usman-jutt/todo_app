@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import FastAPI
 from models import Todo
-from database import todos_detail
+from constants import todos_detail
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
