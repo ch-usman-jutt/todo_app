@@ -1,11 +1,13 @@
-import './App.css'
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
-import TodosList from './features/TodosList';
-import Header from './components/Header';
+import "./App.css";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import TodosList from "./features/TodosList";
+import SignUp from "./features/SignUp";
+import Header from "./components/Header";
 
 const AppRoutes = () => {
   const routes = [
-    { path: '/', element: <TodosList /> },
+    { path: "/", element: <TodosList /> },
+    { path: "/sign-up", element: <SignUp /> },
   ];
 
   const element = useRoutes(routes);
@@ -14,13 +16,12 @@ const AppRoutes = () => {
 };
 
 function App() {
-
   return (
     <Router>
       <Header />
       <AppRoutes />
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
