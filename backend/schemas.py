@@ -12,4 +12,10 @@ class User(BaseModel):
 
     class Config:
         orm_mode = True
-        
+
+class SigninResponse(BaseModel):
+    access_token: str
+    token_type: str
+
+    class Config:
+        orm_mode = True

@@ -17,3 +17,18 @@ export async function signUp(email, password) {
 
   return response;
 }
+
+export async function login(username, password) {
+  const response = await fetch(`${BASE_URL}/signin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({
+      username: username,
+      password: password,
+    }).toString(),
+  });
+
+  return await response.json();
+}

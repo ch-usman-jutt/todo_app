@@ -2,11 +2,10 @@ import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
+import { login } from "@/api";
 import ToastMessage from "@/components/ToastMessage";
 
 import { useNavigate } from "react-router-dom";
-
-import { signUp } from "@/api";
 
 import {
   TitleText,
@@ -16,31 +15,33 @@ import {
   FieldContainer,
 } from "./styled";
 
-export default function SignUp() {
+export default function Login() {
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [toastMessage, setToastMessage] = useState("");
 
-  const handleSignUp = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    const response = await signUp(email, password);
-    if (response.ok) {
+    const response = await login(email, password);
+    if (response.access_token) {
       setEmail("");
       setPassword("");
-      navigate("login");
+      console.log("res", response);
+      localStorage.setItem("access_token", response.access_token);
+      navigate("todos");
     } else {
-      setToastMessage("Email Already exists");
+      setToastMessage("Email or password is incorrect");
     }
   };
 
   return (
     <FormContainer>
-      <form onSubmit={handleSignUp} className="form">
+      <form onSubmit={handleLogin} className="form">
         <CardContainer>
           <FieldContainer>
-            <TitleText>Sign Up</TitleText>
+            <TitleText>Login</TitleText>
             <TextField
               onChange={(e) => setEmail(e.target.value)}
               value={email}
@@ -51,15 +52,15 @@ export default function SignUp() {
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               value={password}
+              placeholder="Please enter passowrd"
               required={true}
-              placeholder="Please enter password"
               type="password"
             />
             <Button variant="contained" type="submit">
-              Sign up
+              Sign In
             </Button>
             <FooterText>
-              Already have an account? &nbsp; <a href="/login">Sign In</a>
+              Don&apos;t have an account? &nbsp; <a href="/sign-up">Sign Up</a>
             </FooterText>
           </FieldContainer>
         </CardContainer>

@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from crud import get_user_by_email, create_user, authenticate_user
 from models import Todo
-from schemas import User, UserCreate
+from schemas import User, UserCreate, SigninResponse
 from database import SessionLocal, Base, engine
 
 from constants import todos_detail
@@ -43,7 +43,7 @@ def create_users(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     return create_user(db=db, user=user)
 
-@app.post("/signin/")
+@app.post("/signin/", response_model=SigninResponse)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(db, email=form_data.username, password=form_data.password)
     if not user:
@@ -58,3 +58,4 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
 @app.get("/list", response_model=List[Todo])
 def todos():
     return todos_detail
+    
